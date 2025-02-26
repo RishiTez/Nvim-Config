@@ -25,8 +25,28 @@ require("lazy").setup({
     "github/copilot.vim",
     lazy = false,
   },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
+    lazy = false,
+    build = "make tiktoken", -- Only on MacOS or Linux
+    format = "markdown",
+    opts = {
+      -- See Configuration section for options
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
   { import = "plugins" },
 }, lazy_config)
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  command = "setlocal conceallevel=2",
+})
+vim.opt.completeopt = {"menu", "menuone", "noinsert", "noselect", "popup"}
 
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
