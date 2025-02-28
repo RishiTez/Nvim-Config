@@ -39,6 +39,17 @@ require("lazy").setup({
     },
     -- See Commands section for default commands if you want to lazy load on them
   },
+  {
+    "GCBallesteros/jupytext.nvim",
+    config = true,
+    lazy = false,
+  },
+  {
+    'barrett-ruth/live-server.nvim',
+    build = 'npm add -g live-server',
+    cmd = { 'LiveServerStart', 'LiveServerStop' },
+    config = true,
+  },
   { import = "plugins" },
 }, lazy_config)
 
@@ -60,6 +71,6 @@ vim.schedule(function()
 end)
 
 -- Custom
-vim.api.nvim_set_keymap('t','<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t','jk', '<C-\\><C-n>', { noremap = true, silent = true })
 
 vim.opt.relativenumber = true

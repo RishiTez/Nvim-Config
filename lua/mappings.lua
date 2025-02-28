@@ -13,6 +13,7 @@ map("i", "jk", "<ESC>")
 map("n", "<leader>cc", ":CopilotChatToggle<CR>", { noremap = true, silent = true, desc = "Toggle Copilot Chat" })
 map("v", "<leader>ce", ":CopilotChatExplain<CR>", { noremap = true, silent = true, desc = "Explains selected code" })
 map("v", "<leader>cf", ":CopilotChatFix<CR>", { noremap = true, silent = true, desc = "Rewrites the selected code without bugs" })
+map("n", "<leader>cd", ":Copilot disable<CR>", { noremap = true, silent = true, desc = "Disable Copilot" })
 
 -- Nvim Tree mappings
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle NvimTree" })
