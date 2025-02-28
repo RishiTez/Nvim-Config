@@ -84,5 +84,10 @@ return{
     vim.keymap.set("n", "<leader>du", function()
       dapui.toggle()
     end, {noremap = true, silent = true, desc = "Toggle UI"})
+
+    -- Remove all Breakpoints
+    vim.keymap.set("n", "<leader>dx", function()
+      dap.clear_breakpoints()
+    end, {noremap = true, silent = true, desc = "Remove all Breakpoints"})
   end,
 }
