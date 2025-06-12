@@ -18,7 +18,7 @@ return{
       commented = true,
     })
 
-    dap_python.setup("python3")
+    dap_python.setup("python")
 
     vim.fn.sign_define("DapBreakpoint", {
       text = "⊙",
