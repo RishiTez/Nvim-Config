@@ -1,3 +1,4 @@
+vim.env.PATH = vim.env.PATH .. ":" .. "/Users/rishi/.nvm/versions/node/v23.1.0/bin"
 -- This file needs to have same structure as nvconfig.lua 
 -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
 -- Please read that file to know all available options :( 

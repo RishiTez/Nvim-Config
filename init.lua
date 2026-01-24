@@ -1,3 +1,5 @@
+local node_bin = "/Users/rishi/.nvm/versions/node/v23.1.0/bin"
+vim.env.PATH = node_bin .. ":" .. vim.env.PATH
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
@@ -22,8 +24,59 @@ require("lazy").setup({
     import = "nvchad.plugins",
   },
   {
-    "github/copilot.vim",
-    lazy = false,
+    "Vigemus/iron.nvim",
+    config = function()
+      local iron = require("iron.core")
+
+      iron.setup {
+        config = {
+          repl_definition = {
+            python = { command = { "ipython" , "--no-autoindent" } },
+            lua = { command = { "lua" } },
+          },
+          repl_open_cmd = "vertical botright 60 split",
+        },
+        format = function(lines)
+          if lines[1] == "" then table.remove(lines, 1) end
+          if lines[#lines] == "" then table.remove(lines, #lines) end
+
+          local min_indent = math.huge
+          for _, line in ipairs(lines) do
+            local indent = line:match("^(%s*)")
+            if #indent < min_indent and #indent < #line then
+              min_indent = #indent
+            end
+          end
+          if min_indent == math.huge then min_indent = 0 end
+
+          for i, line in ipairs(lines) do
+            lines[i] = line:sub(min_indent + 1)
+          end
+
+          table.insert(lines, 1, "%cpaste -q")
+          table.insert(lines, "%cpaste --")
+          return lines
+        end,
+        keymaps = {
+          send_motion = "<space>sc",
+          visual_send = "<space>sc",
+          send_file = "<space>sf",
+          send_line = "<space>sl",
+          exit = "<space>sq",
+          clear = "<space>cl",
+        },
+        highlight = { italic = true },
+        ignore_blank_lines = true, }
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        callback = function()
+          vim.keymap.set("n", "<space>so", function()
+            iron.repl_for("python")
+          end, { buffer = true, desc = "Open Python REPL" })
+        end,
+      })
+    end,
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -38,11 +91,6 @@ require("lazy").setup({
       -- See Configuration section for options
     },
     -- See Commands section for default commands if you want to lazy load on them
-  },
-  {
-    "GCBallesteros/jupytext.nvim",
-    config = true,
-    lazy = false,
   },
   {
     'barrett-ruth/live-server.nvim',
