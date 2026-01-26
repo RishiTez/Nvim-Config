@@ -79,20 +79,6 @@ require("lazy").setup({
     end,
   },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-    },
-    lazy = false,
-    build = "make tiktoken", -- Only on MacOS or Linux
-    format = "markdown",
-    opts = {
-      -- See Configuration section for options
-    },
-    -- See Commands section for default commands if you want to lazy load on them
-  },
-  {
     'barrett-ruth/live-server.nvim',
     build = 'npm add -g live-server',
     cmd = { 'LiveServerStart', 'LiveServerStop' },
