@@ -94,6 +94,17 @@ require("lazy").setup({
         virtual_text_column = 1,  
     },
   },
+  {
+    "jiaoshijie/undotree",
+    opts = {},
+    keys = {
+      { 
+        "<leader>u", 
+        "<cmd>lua require('undotree').toggle()<cr>", 
+        desc = "Toggle Undo Tree", 
+      },
+    },
+  },
   { import = "plugins" },
 }, lazy_config)
 
