@@ -1,18 +1,9 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
+    event = 'BufWritePre', 
     opts = require "configs.conform",
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
-
   {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
@@ -23,27 +14,29 @@ return {
   -- LSP management
   {
     "williamboman/mason.nvim",
-    cmd = "Mason",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "neovim/nvim-lspconfig",
-    },
     opts = {
       ensure_installed = {
-        "pyright",     -- For Python
-        "html",        -- For HTML
-        "cssls",       -- For CSS
+        "lua-language-server",
+        "pyright",
+        "tsserver",
+        "gopls",
+        "jdtls",
+        "html",
+        "cssls",
       },
     },
   },
 
-  -- LSP configuration
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+    config = function()
+      require("mason-lspconfig").setup()
+    end,
+  },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -51,7 +44,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("mason-lspconfig").setup()
+      require("configs.lspconfig")
     end,
   },
 
@@ -60,6 +53,11 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       local cmp = require("cmp")
@@ -76,5 +74,14 @@ return {
       })
     end,
   },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
+  },
+  {
+    "folke/noice.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+  }
 }
 
