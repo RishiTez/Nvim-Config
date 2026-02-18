@@ -76,6 +76,14 @@ require("lazy").setup({
           end, { buffer = true, desc = "Open Python REPL" })
         end,
       })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "java",
+        callback = function()
+          require("configs.java")
+        end,
+      })
+
     end,
   },
   {
