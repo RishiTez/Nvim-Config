@@ -76,6 +76,14 @@ require("lazy").setup({
           end, { buffer = true, desc = "Open Python REPL" })
         end,
       })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "java",
+        callback = function()
+          require("configs.java")
+        end,
+      })
+
     end,
   },
   {
@@ -94,6 +102,17 @@ require("lazy").setup({
         virtual_text_column = 1,  
     },
   },
+  {
+    "jiaoshijie/undotree",
+    opts = {},
+    keys = {
+      { 
+        "<leader>u", 
+        "<cmd>lua require('undotree').toggle()<cr>", 
+        desc = "Toggle Undo Tree", 
+      },
+    },
+  },
   { import = "plugins" },
 }, lazy_config)
 
@@ -109,6 +128,8 @@ dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
 require "nvchad.autocmds"
+require "configs.autocmds"
+require "configs.lsp"
 
 vim.schedule(function()
   require "mappings"
