@@ -64,7 +64,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local cmp_mapping = cmp.mapping.preset.insert({
-        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
       })
       cmp.setup({
         sources = cmp.config.sources({
