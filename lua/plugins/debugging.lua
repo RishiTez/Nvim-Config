@@ -2,7 +2,7 @@ return{
   "mfussenegger/nvim-dap",
   lazy = false,
   dependencies = {
-    "rcarriga/nvim-dap-ui",  
+    "rcarriga/nvim-dap-ui",
     "theHamsta/nvim-dap-virtual-text",
     "nvim-neotest/nvim-nio",
     "mfussenegger/nvim-dap-python",
@@ -12,13 +12,72 @@ return{
     local dap = require("dap")
     local dapui = require("dapui")
     local dap_python = require("dap-python")
-    
+
     require("dapui").setup({})
     require("nvim-dap-virtual-text").setup({
       commented = true,
     })
 
     dap_python.setup("python")
+
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "::1",
+      port = "${port}",
+      executable = {
+        command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+        args = { "${port}" },
+      },
+    }
+
+    local js_config = {
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Launch file",
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+        resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+      },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Attach to process",
+        processId = require("dap.utils").pick_process,
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+      },
+    }
+
+    local ts_config = {
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Launch file (ts)",
+        runtimeExecutable = "node",
+        runtimeArgs = { "--experimental-strip-types" },
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+      },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Attach to process",
+        processId = require("dap.utils").pick_process,
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+      },
+    }
+
+    for _, lang in ipairs({ "javascript", "javascriptreact" }) do
+      dap.configurations[lang] = js_config
+    end
+
+    for _, lang in ipairs({ "typescript", "typescriptreact" }) do
+      dap.configurations[lang] = ts_config
+    end
 
     vim.fn.sign_define("DapBreakpoint", {
       text = "⊙",

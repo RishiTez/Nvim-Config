@@ -34,6 +34,7 @@ Beyond the NvChad defaults, this config adds:
 | `live-server.nvim` | Live reload for web dev |
 | `git-blame.nvim` | Inline git blame virtual text |
 | `nvim-dap` + `nvim-dap-ui` + `nvim-dap-python` | Python debugging with DAP |
+| `nvim-dap-vscode-js` + `vscode-js-debug` | TypeScript/JavaScript debugging with DAP |
 | `nvim-dap-virtual-text` | Inline variable values during debug |
 
 ## Key Mappings (leader = space)
